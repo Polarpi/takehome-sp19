@@ -32,3 +32,7 @@ def updateById(type, id, update_values):
 
 def deleteById(type, id):
     db_state[type] = [i for i in get(type) if i["id"] != id]
+
+
+def getMinEpisodes(type, min_episodes):
+    return [i for i in get(type) if i["episodes_seen"] >= min_episodes]
