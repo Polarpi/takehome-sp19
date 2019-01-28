@@ -11,15 +11,17 @@ class App extends Component {
                 { id: 1, name: "Game of Thrones", episodes_seen: 0 },
                 { id: 2, name: "Naruto", episodes_seen: 220 },
                 { id: 3, name: "Black Mirror", episodes_seen: 3 },
-            ]
+            ],
+            name: ""
         }
 
         this.complete = true;
-        this.name = "";
+        this.updateName = this.updateName.bind(this);
+        this.addShow = this.addShow.bind(this);
     }
 
     updateName(event) {
-        this.name = event.target.value;
+        this.setState({ name: event.target.value });
     }
 
     addShow(event) {
@@ -32,7 +34,7 @@ class App extends Component {
             }
         });
         newId++;
-        var newItem = JSON.parse(JSON.stringify({ id: newId, name: this.name, episodes_seen: 0 }));
+        var newItem = JSON.parse(JSON.stringify({ id: newId, name: this.state.name, episodes_seen: 0 }));
         newState['shows'].push(newItem);
         this.setState(newState);
     }
@@ -42,8 +44,10 @@ class App extends Component {
             <div className="App">
                 <Instructions complete={this.complete} />
                 <form onSubmit={this.addShow}>
-                    <input type="text" name="name" onChange="this.updateName" value={this.name}></input>
-                    <input type="button" value="submit"></input>
+                    <label>Add Show Name:
+                    <input type="text" onChange={this.updateName} value={this.state.name}></input>
+                    </label>
+                    <input type="button" value="submit" onClick={this.addShow}></input>
                 </form>
                 {
                     this.state.shows.map(x => (
